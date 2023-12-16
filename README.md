@@ -59,7 +59,6 @@ Building an Socialsflow workflow is a five-step process:
    
          - uses: rg-wood/send-tweet-action@v0.16
            with:
-             key: ${{ on.activitypub.outputs.uri }}
              status: ${{ on.activitypub.outputs.message }}
              replyto: ${{ steps.load-history.outputs.status }}
              consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}

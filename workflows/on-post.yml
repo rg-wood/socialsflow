@@ -27,12 +27,11 @@ jobs:
             cat ./tweets.txt  >> $GITHUB_OUTPUT
           fi
 
-      - uses: rg-wood/send-tweet-action@v0.17
+      - uses: rg-wood/send-tweet-action@v0.18
         id: send
         with:
-          key: ${{ on.activitypub.outputs.uri }}
           status: ${{ on.activitypub.outputs.message }}
-          replyto: ${{steps.read-history.outputs.status}}
+          replyto: ${{ steps.read-history.outputs.status }}
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
