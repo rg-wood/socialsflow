@@ -11,8 +11,6 @@ jobs:
       - name: 🏁 Running Socialsflow
         env:
           uri: ${{on.activitypub.outputs.uri}}
-          message: ${{on.activitypub.outputs.message}}
-          replyTo: ${{on.activitypub.outputs.replyTo}}
         run: echo 🔫 Socialsflow triggered by post $uri
 
   twitter:
