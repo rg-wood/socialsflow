@@ -18,29 +18,34 @@ jobs:
     steps:
       - uses: actions/cache/restore@v3
         with:
-          path: ./twitter-history.json
+          path: ./tweets.txt
           key: ${{ on.activitypub.outputs.replyto }}
 
-      - uses: rg-wood/send-tweet-action@v0.16
+      - id: read-history
+        run: |
+          if test -f ./tweets.txt; then
+            cat ./tweets.txt  >> $GITHUB_OUTPUT
+          fi
+
+      - uses: rg-wood/send-tweet-action@v0.17
+        id: send
         with:
           key: ${{ on.activitypub.outputs.uri }}
           status: ${{ on.activitypub.outputs.message }}
-          replyto: ${{ on.activitypub.outputs.replyto }}
+          replyto: ${{steps.read-history.outputs.status}}
           consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
           access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-          history: ./twitter-history.json
+
+      - id: write-history
+        run: echo 'status=${{ steps.send.outputs.status }}' >> ./tweets.txt
 
       - uses: actions/cache/save@v3
         with:
-          path: ./twitter-history.json
+          path: ./tweets.txt
           key: ${{ on.activitypub.outputs.uri }}
 
-      - uses: actions/cache/save@v3
-        with:
-          path: ./tweet-history.json
-          key: ${{ on.activitypub.outputs.uri }}
 #   bluesky:
 #     runs-on: ubuntu-latest
 #     steps:
