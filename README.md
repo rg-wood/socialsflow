@@ -1,13 +1,13 @@
 
-This is a workflow repository powered by [Actionsflow](https://github.com/actionsflow/actionsflow), generated from [actionsflow/actionsflow-workflow-default](https://github.com/actionsflow/actionsflow-workflow-default)
+Crossposting social media workflow repository powered by [Actionsflow](https://github.com/actionsflow/actionsflow).
 
-# 🏁 Getting Started <a name = "getting_started"></a>
+# 🏁 Getting Started
 
-Build an Actionsflow workflow is a four-step process:
+Building an Socialsflow workflow is a five-step process:
 
-1. **Create a public Github repository by this [link](https://github.com/actionsflow/actionsflow-workflow-default/generate).**
+1. **Create a public Github repository by this [link](https://github.com/rg-wood/socialsflow/generate).**
 
-   A typical Actionsflow repository structure looks like this:
+   Your Socialsflow repository structure looks like this:
 
    ```sh
    ├── .github
@@ -16,12 +16,11 @@ Build an Actionsflow workflow is a four-step process:
    ├── .gitignore
    ├── README.md
    └── workflows
-   │   └── rss.yml
-   │   └── webhook.yml
+   │   └── on-post.yml
    └── package.json
    ```
 
-1. **Uncomment [`.github/workflows/actionsflow.yml`](/.github/workflows/actionsflow.yml) schedule event**
+2. **Uncomment [`.github/workflows/actionsflow.yml`](/.github/workflows/actionsflow.yml) schedule event**
 
     ```yml
     on:
@@ -30,38 +29,63 @@ Build an Actionsflow workflow is a four-step process:
     ```
     > Note: To prevent abuse, by default, the schedule is commented, please modify the schedule time according to your own needs, the default is once every 15 minutes. Learn more about schedule event, please see [here](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule)
 
-1. **Define your [workflow file](https://actionsflow.github.io/docs/workflow/) at `workflows` directory**
+3. **Uncomment the jobs for your socials**
 
-   A typical workflow file `rss.yml` looks like this:
+   Configure the social media account that you'll use as the source of your posts by uncommenting them in `on-post.yml`. For example, we've enabled the send tweet workflow here: 
 
    ```yaml
    on:
-     rss:
-       url: https://hnrss.org/newest?points=300&count=3
+     activitypub:
+       host: toot.io
+       user: testgrislyeye
+   
    jobs:
-     request:
-       name: Make a HTTP Request
+     print:
+       name: Print
        runs-on: ubuntu-latest
        steps:
-         - name: Make a HTTP Request
-           uses: actionsflow/axios@v1
+         - name: 🏁 Running Socialsflow
+           env:
+             uri: ${{on.activitypub.outputs.uri}}
+             message: ${{on.activitypub.outputs.message}}
+             replyTo: ${{on.activitypub.outputs.replyTo}}
+           run: echo 🔫 Socialsflow triggered by $uri
+   
+   jobs:
+     twitter:
+       runs-on: ubuntu-latest
+       
+       ...
+   
+         - uses: rg-wood/send-tweet-action@v0.16
            with:
-             url: https://hookb.in/VGPzxoWbdjtE22bwznzE
-             method: POST
-             body: |
-               {
-                 "link":"${{ on.rss.outputs.link }}", 
-                 "title": "${{ on.rss.outputs.title }}",
-                 "content":"<<<${{ on.rss.outputs.contentSnippet }}>>>"
-               }
+             key: ${{ on.activitypub.outputs.uri }}
+             status: ${{ on.activitypub.outputs.message }}
+             replyto: ${{ steps.load-history.outputs.status }}
+             consumer-key: ${{ secrets.TWITTER_CONSUMER_API_KEY }}
+             consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
+             access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
+             access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
+   
+         ...
    ```
+   
+   Comment out the social media jobs you want to crosspost to.
+   
+4. **Configure you credentials**
 
-   For more information about the Actionsflow workflow file, see the
-   [Actionsflow workflow reference](https://actionsflow.github.io/docs/workflow/).
+Setup the credential secrets for you social media accounts:
 
-   You can explore [Triggers List](https://actionsflow.github.io/docs/triggers/) or [Awesome Actionsflow Workflows](https://github.com/actionsflow/awesome-actionsflow) to get more inspired.
+##### 🐦 Twitter
 
-1. **Commit and push your updates to Github**
+You need to set-up consumer and access tokens as GitHub Action secrets in your workflow project. See the [send-tweet-action documentation](https://github.com/marketplace/actions/send-tweet-action#secret-configuration) for full instructions.
+
+##### ☁️ BlueSky
+
+You need to configure the authority and login credentials for your Bluesky account as GitHub Action. See the [send-bluesky-post documentation](https://github.com/marketplace/actions/send-bluesky-post#specify-authority) for full instructions.
+
+
+5. **Commit and push your updates to Github**
 
 Then, Actionsflow will run your workflows as you defined, you can view logs at your repository actions tab at [Github](https://github.com)
 
@@ -102,18 +126,3 @@ Actionsflow build will use cache for deduplicating the data, if you want to test
 # Clean the cache and dist folder.
 npm run clean
 ```
-
-Learn more abount self-hosted Actionsflow [here](https://actionsflow.github.io/docs/self-hosted)
-
-
-# 🎓 Learn More <a name="reference"></a>
-
-Full documentation for Actionsflow lives [on the website](https://actionsflow.github.io/docs/).
-
-- [Workflow Syntax for Actionsflow](https://actionsflow.github.io/docs/workflow/) - Learn more about the Actionsflow workflow file syntax
-- [Triggers List](https://actionsflow.github.io/docs/triggers/) - Explore Actionsflow triggers
-- [Awesome Actionsflow Workflows](https://github.com/actionsflow/awesome-actionsflow) - Explore Actionsflow workflows use case to get inspired
-- [Core Concepts](https://actionsflow.github.io/docs/concepts/) - Learn more about how Actionsflow worked
-- [Creating Triggers for Actionsflow](https://actionsflow.github.io/docs/creating-triggers/) - Learn more about how to create your own trigger for Actionsflow
-- [FAQs](https://actionsflow.github.io/docs/faqs/) - Actionsflow FAQs
-- [Upgrade Guide](https://actionsflow.github.io/docs/upgrade/)
