@@ -19,12 +19,12 @@ on:
 #           # echo replyTo: $replyTo
 
 jobs:
-  tweet:
+  twitter:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/cache/restore@v3
         with:
-          path: ./tweet-history.json
+          path: ./twitter-history.json
           key: ${{ on.activitypub.outputs.replyto }}
 
       - uses: rg-wood/send-tweet-action@v0.16
@@ -36,7 +36,12 @@ jobs:
           consumer-secret: ${{ secrets.TWITTER_CONSUMER_API_SECRET }}
           access-token: ${{ secrets.TWITTER_ACCESS_TOKEN }}
           access-token-secret: ${{ secrets.TWITTER_ACCESS_TOKEN_SECRET }}
-          history: ./tweet-history.json
+          history: ./twitter-history.json
+
+      - uses: actions/cache/save@v3
+        with:
+          path: ./twitter-history.json
+          key: ${{ on.activitypub.outputs.uri }}
 
       - uses: actions/cache/save@v3
         with:
