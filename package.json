@@ -14,11 +14,9 @@
   "license": "0BSD",
   "scripts": {
     "build": "actionsflow build",
-    "start": "actionsflow start",
-    "watch": "actionsflow start -w",
-    "act": "act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=actionsflow/act-environment:v1 -P ubuntu-18.04=actionsflow/act-environment:v1",
-    "clean": "actionsflow clean",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "actionsflow start -- -s TWITTER_CONSUMER_API_KEY -s TWITTER_CONSUMER_API_SECRET -s TWITTER_ACCESS_TOKEN -s TWITTER_ACCESS_TOKEN_SECRET",
+    "watch": "actionsflow start -w -- -s TWITTER_CONSUMER_API_KEY -s TWITTER_CONSUMER_API_SECRET -s TWITTER_ACCESS_TOKEN -s TWITTER_ACCESS_TOKEN_SECRET",
+    "clean": "actionsflow clean"
   },
   "repository": {
     "type": "git",
