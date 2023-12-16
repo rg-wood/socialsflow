@@ -3,22 +3,18 @@ on:
     host: toot.io
     user: testgrislyeye
 
-# jobs:
-#   print:
-#     name: Print
-#     runs-on: ubuntu-latest
-#     steps:
-#       - name: Print Post Outputs
-#         env:
-#           uri: ${{on.activitypub.outputs.uri}}
-#           message: ${{on.activitypub.outputs.message}}
-#           # replyTo: ${{on.activitypub.outputs.replyTo}}
-#         run: |
-#           echo uri: $uri
-#           echo message: $message
-#           # echo replyTo: $replyTo
-
 jobs:
+  print:
+    name: Print
+    runs-on: ubuntu-latest
+    steps:
+      - name: 🏁 Running Socialsflow
+        env:
+          uri: ${{on.activitypub.outputs.uri}}
+          message: ${{on.activitypub.outputs.message}}
+          replyTo: ${{on.activitypub.outputs.replyTo}}
+        run: echo 🔫 Socialsflow triggered by post $uri
+
   twitter:
     runs-on: ubuntu-latest
     steps:
