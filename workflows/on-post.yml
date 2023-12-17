@@ -8,10 +8,10 @@ jobs:
     name: Print
     runs-on: ubuntu-latest
     steps:
-      - name: 🏁 Running Socialsflow
+      - name: 🏁 Running Socialflows
         env:
           uri: ${{on.activitypub.outputs.uri}}
-        run: echo 🔫 Socialsflow triggered by post $uri
+        run: echo 🔫 Socialflows triggered by post $uri
 
   # twitter:
   #   runs-on: ubuntu-latest

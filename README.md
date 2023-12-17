@@ -3,11 +3,11 @@ Crossposting social media workflow repository powered by [Actionsflow](https://g
 
 # 🏁 Getting Started
 
-Building an Socialsflow workflow is a five-step process:
+Building an Socialflows workflow is a five-step process:
 
-1. **Create a public Github repository by this [link](https://github.com/rg-wood/socialsflow/generate).**
+1. **Create a public Github repository by this [link](https://github.com/socialflows/socialflows/generate).**
 
-   Your Socialsflow repository structure looks like this:
+   Your Socialflows repository structure looks like this:
 
    ```sh
    ├── .github
@@ -52,12 +52,12 @@ Building an Socialsflow workflow is a five-step process:
        name: Print
        runs-on: ubuntu-latest
        steps:
-         - name: 🏁 Running Socialsflow
+         - name: 🏁 Running Socialflows
            env:
              uri: ${{on.activitypub.outputs.uri}}
              message: ${{on.activitypub.outputs.message}}
              replyTo: ${{on.activitypub.outputs.replyTo}}
-           run: echo 🔫 Socialsflow triggered by $uri
+           run: echo 🔫 Socialflows triggered by $uri
    
    jobs:
      twitter:
