@@ -20,7 +20,7 @@ Building an Socialsflow workflow is a five-step process:
    └── package.json
    ```
 
-2. **Uncomment [`.github/workflows/actionsflow.yml`](/.github/workflows/actionsflow.yml) schedule event**
+2. **Uncomment [`.github/workflows/actionsflow.yml`](/.github/workflows/actionsflow.yml) schedule event and trigger**
 
     ```yml
     on:
@@ -28,6 +28,14 @@ Building an Socialsflow workflow is a five-step process:
         - cron: "*/15 * * * *"
     ```
     > Note: To prevent abuse, by default, the schedule is commented, please modify the schedule time according to your own needs, the default is once every 15 minutes. Learn more about schedule event, please see [here](https://docs.github.com/en/actions/reference/events-that-trigger-workflows#schedule)
+
+
+    ```yml
+    on:
+      activitypub:
+        host: toot.io
+        user: <toot-user>
+    ```
 
 3. **Uncomment the jobs for your socials**
 
@@ -77,11 +85,11 @@ Setup the credential secrets for you social media accounts:
 
 ##### 🐦 Twitter
 
-You need to set-up consumer and access tokens as GitHub Action secrets in your workflow project. See the [send-tweet-action documentation](https://github.com/marketplace/actions/send-tweet-action#secret-configuration) for full instructions.
+You need to set-up consumer and access tokens as GitHub Action secrets in your workflow project. See the [send-tweet-action documentation](https://github.com/marketplace/actions/send-and-reply-tweet-action#secret-configuration) for full instructions.
 
 ##### ☁️ BlueSky
 
-You need to configure the authority and login credentials for your Bluesky account as GitHub Action. See the [send-bluesky-post documentation](https://github.com/marketplace/actions/send-bluesky-post#specify-authority) for full instructions.
+You need to configure the authority and login credentials for your Bluesky account as GitHub Action. See the [send-bluesky-post documentation](https://github.com/marketplace/actions/send-and-reply-bluesky-action#specify-authority) for full instructions.
 
 
 5. **Commit and push your updates to Github**
