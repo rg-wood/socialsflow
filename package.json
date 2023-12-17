@@ -2,7 +2,7 @@
   "name": "socialsflow",
   "private": true,
   "description": "Automated cross-posting for a fractured web",
-  "version": "0.0.0",
+  "version": "1.0.0",
   "author": "Ric Wood <ric@grislyeye.com>",
   "devDependencies": {
     "actionsflow": "^1.12.1"
@@ -24,5 +24,8 @@
   },
   "bugs": {
     "url": "https://github.com/rg-wood/socialsflow/issues"
+  },
+  "dependencies": {
+    "@actionsflow/trigger-activitypub": "^1.0.2"
   }
 }
