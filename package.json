@@ -14,8 +14,8 @@
   "license": "0BSD",
   "scripts": {
     "build": "actionsflow build",
-    "start": "actionsflow start -- -s TWITTER_CONSUMER_API_KEY -s TWITTER_CONSUMER_API_SECRET -s TWITTER_ACCESS_TOKEN -s TWITTER_ACCESS_TOKEN_SECRET",
-    "watch": "actionsflow start -w -- -s TWITTER_CONSUMER_API_KEY -s TWITTER_CONSUMER_API_SECRET -s TWITTER_ACCESS_TOKEN -s TWITTER_ACCESS_TOKEN_SECRET",
+    "start": "actionsflow start -- -s TWITTER_CONSUMER_API_KEY -s TWITTER_CONSUMER_API_SECRET -s TWITTER_ACCESS_TOKEN -s TWITTER_ACCESS_TOKEN_SECRET -s BLUESKY_PASSWORD",
+    "watch": "actionsflow start -w -- -s TWITTER_CONSUMER_API_KEY -s TWITTER_CONSUMER_API_SECRET -s TWITTER_ACCESS_TOKEN -s TWITTER_ACCESS_TOKEN_SECRET -s BLUESKY_PASSWORD",
     "clean": "actionsflow clean"
   },
   "repository": {

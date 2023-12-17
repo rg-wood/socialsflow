@@ -45,11 +45,33 @@ jobs:
           path: ./tweets.txt
           key: ${{ on.activitypub.outputs.uri }}
 
-#   bluesky:
-#     runs-on: ubuntu-latest
-#     steps:
-#       - uses: rg-wood/bluesky-post-action@v0.1
-#         with:
-#           id: ${{ on.activitypub.outputs.uri }}
-#           status: ${{ on.activitypub.outputs.message }}
-#           replyto: ${{ on.activitypub.outputs.replyto }}
+  bluesky:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/cache/restore@v3
+        with:
+          path: ./atposts.txt
+          key: ${{ on.activitypub.outputs.replyto }}
+
+      - id: read-history
+        run: |
+          if test -f ./atposts.txt; then
+            cat ./atposts.txt  >> $GITHUB_OUTPUT
+          fi
+
+      - uses: rg-wood/bluesky-post-action@v0.10
+        id: post
+        with:
+          text: ${{ on.activitypub.outputs.message }}
+          replyto: ${{ steps.read-history.outputs.reference }}
+          service: https://bsky.social
+          identifier: ric@grislyeye.com
+          password: ${{ secrets.BLUESKY_PASSWORD }}
+
+      - id: write-history
+        run: echo 'reference=${{ steps.post.outputs.reference }}' >> ./atposts.txt
+
+      - uses: actions/cache/save@v3
+        with:
+          path: ./atposts.txt
+          key: ${{ on.activitypub.outputs.uri }}
