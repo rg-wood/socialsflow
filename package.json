@@ -2,7 +2,7 @@
   "name": "socialflows",
   "private": true,
   "description": "Automated cross-posting for a fractured web",
-  "version": "1.0.1",
+  "version": "1.0.2",
   "author": "Ric Wood <ric@grislyeye.com>",
   "devDependencies": {
     "actionsflow": "^1.12.1"
