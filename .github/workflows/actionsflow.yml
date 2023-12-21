@@ -35,5 +35,7 @@ jobs:
           json-github: ${{ toJSON(github) }}
       - name: Setup act
         uses: actionsflow/setup-act-for-actionsflow@v1.2.0
+      - name: Install depedendencies
+        run: npm ci
       - name: Run act
         run: act --workflows ./dist/workflows --secret-file ./dist/.secrets --eventpath ./dist/event.json --env-file ./dist/.env -P ubuntu-latest=ghcr.io/catthehacker/ubuntu:act-latest
